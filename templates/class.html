@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Skolo Online Learning">
+
+    <title>Skolo</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.png') }}">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="navbar-top.css" rel="stylesheet">
+  </head>
+  <body>
+
+
+
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Skolo Online Learning</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <li class="nav-item">
+          <a class="nav-link"  href="/">Search Tweets</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/classify">Classify Tweets</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+<main class="container">
+
+  <div class="container mt-5 mb-5">
+
+    <br>
+
+    <h1 class="mb-3">Your Tweets Classified</h1>
+
+    <form class="" action="/classify" method="post">
+
+      <div class="mb-3">
+        <label for="query" class="form-label">Enter the Search Query for Twitter</label>
+        <input type="text" class="form-control" id="query" name="query" placeholder="Search for .......">
+      </div>
+
+      <button type="submit" class="btn btn-primary"> RUN SEARCH QUERY </button>
+    </form>
+
+    <br>
+
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="positive-tab" data-bs-toggle="tab" data-bs-target="#positive" type="button" role="tab" aria-controls="positive" aria-selected="true">positive</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="negative-tab" data-bs-toggle="tab" data-bs-target="#negative" type="button" role="tab" aria-controls="negative" aria-selected="false">negative</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="neutral-tab" data-bs-toggle="tab" data-bs-target="#neutral" type="button" role="tab" aria-controls="neutral" aria-selected="false">neutral</button>
+    </li>
+  </ul>
+
+
+
+  <div class="tab-content" id="myTabContent">
+
+    <div class="tab-pane fade show active" id="positive" role="tabpanel" aria-labelledby="positive-tab">
+      <br>
+      <div class="card-group mt-5">
+        <div class="row">
+          {% for tweet in positiveTweets %}
+          <!-- Card starts here -->
+          <div class="col-lg-4 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Username: {{tweet.username}}</h5>
+                <p class="card-text">{{tweet.text}}</p>
+              </div>
+              <div class="card-footer">
+               <div class="row">
+                 <div class="col-lg-6">
+                   <a href="{{tweet.url}}"><button class="btn btn-primary btn-block">VIEW TWEET</button></a>
+                 </div>
+                 <div class="col-lg-6">
+                   <a href="/retweet/{{tweet.id}}/"><button class="btn btn-success btn-block">RETWEET</button></a>
+                 </div>
+               </div>
+              </div>
+            </div>
+          </div>
+          <!-- Card ends here -->
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+
+    <div class="tab-pane fade" id="negative" role="tabpanel" aria-labelledby="negative-tab">
+      <div class="card-group mt-5">
+        <div class="row">
+          {% for tweet in negativeTweets %}
+          <!-- Card starts here -->
+          <div class="col-lg-4 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Username: {{tweet.username}}</h5>
+                <p class="card-text">{{tweet.text}}</p>
+              </div>
+              <div class="card-footer">
+               <div class="row">
+                 <div class="col-lg-6">
+                   <a href="{{tweet.url}}"><button class="btn btn-primary btn-block">VIEW TWEET</button></a>
+                 </div>
+                 <div class="col-lg-6">
+                   <a href="/retweet/{{tweet.id}}/"><button class="btn btn-success btn-block">RETWEET</button></a>
+                 </div>
+               </div>
+              </div>
+            </div>
+          </div>
+          <!-- Card ends here -->
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+
+    <div class="tab-pane fade" id="neutral" role="tabpanel" aria-labelledby="neutral-tab">
+      <div class="card-group mt-5">
+        <div class="row">
+          {% for tweet in neutralTweets %}
+          <!-- Card starts here -->
+          <div class="col-lg-4 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Username: {{tweet.username}}</h5>
+                <p class="card-text">{{tweet.text}}</p>
+              </div>
+              <div class="card-footer">
+               <div class="row">
+                 <div class="col-lg-6">
+                   <a href="{{tweet.url}}"><button class="btn btn-primary btn-block">VIEW TWEET</button></a>
+                 </div>
+                 <div class="col-lg-6">
+                   <a href="/retweet/{{tweet.id}}/"><button class="btn btn-success btn-block">RETWEET</button></a>
+                 </div>
+               </div>
+              </div>
+            </div>
+          </div>
+          <!-- Card ends here -->
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+  </div>
+
+
+</main>
+
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+
+  </body>
+</html>
