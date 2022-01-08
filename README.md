@@ -16,12 +16,14 @@ Clone the repo
 ### Step 2
 add your twitter keys in the config.py file
 
+```py
 API_KEY = 'add-your-key'
 API_KEY_SECRET = 'add-your-key'
 BEARER_TOKEN = 'add-your-key'
 ACCESS_TOKEN = 'add-your-key'
 ACCESS_TOKEN_SECRET = 'add-your-key'
 OPENAI_API_KEY = ''
+```
 
 ### Replace the tweet training file for your usecase
 The tweet classification only works after you have replaced the training file with your own and upload it to OpenAI, get a document reference and replace the document reference in the code.
